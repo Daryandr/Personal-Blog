@@ -1,16 +1,16 @@
 <template>
-  <hello-world />
+  <post-card />
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "../components/HelloWorld.vue";
+import PostCard from "../components/PostCard.vue";
 
 export default Vue.extend({
   name: "HomePage",
 
   components: {
-    HelloWorld,
+    PostCard,
   },
 });
 </script>
