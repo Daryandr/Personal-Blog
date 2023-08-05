@@ -21,10 +21,10 @@ export default new Vuex.Store({
       const index = state.posts.findIndex((post: Post) => post.id === id);
       state.posts.splice(index, 1);
     },
-    addTask(state, post: Post) {
+    addPost(state, post: Post) {
       state.posts.unshift(post);
     },
-    editTask(state, post) {
+    editPost(state, post) {
       const index = state.posts.findIndex((p: Post) => p.id === post.id);
       state.posts.splice(index, 1, post);
     },
