@@ -1,7 +1,7 @@
 export type Post = {
   id: string;
   title: string;
-  shortDescroption: string;
+  shortDescription: string;
   description: string;
   date: Date;
   comments: [Comment];

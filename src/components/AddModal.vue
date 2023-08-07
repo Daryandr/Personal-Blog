@@ -13,6 +13,7 @@
       <v-form ref="addForm" lazy-validation @submit.prevent="submit">
         <v-card-text>
           <v-text-field
+            color="secondary"
             v-model="post.title"
             class="my-2"
             label="Заголовок"
@@ -24,6 +25,7 @@
           <v-textarea
             v-model="post.shortDescription"
             class="my-2"
+            color="secondary"
             label="Краткое описание"
             :rules="shortRules"
             outlined
@@ -35,6 +37,7 @@
           <v-textarea
             v-model="post.description"
             class="mt-2"
+            color="secondary"
             label="Описание"
             :rules="descRules"
             outlined
@@ -47,9 +50,7 @@
         <v-card-actions>
           <v-spacer />
           <v-btn color="grey" @click="cancel" dark>Отмена</v-btn>
-          <v-btn color="primary" type="submit" :loading="isLoading">
-            Сохранить
-          </v-btn>
+          <v-btn color="primary" type="submit">Сохранить</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -87,7 +88,6 @@ export default Vue.extend({
     descRules: [
       (v: any) => v.length <= 255 || "Максимальная длина 255 символов",
     ],
-    isLoading: false,
   }),
   computed: {
     show: {
@@ -105,17 +105,14 @@ export default Vue.extend({
     cancel() {
       this.show = false;
     },
-    async submit() {
+    submit() {
       const valid = (
         this.$refs.addForm as Vue & { validate: () => boolean }
       ).validate();
       if (valid) {
-        this.isLoading = true;
         this.$emit("save", this.post);
       }
     },
   },
 });
 </script>
-
-<style scoped lang="scss"></style>

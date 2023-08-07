@@ -2,10 +2,15 @@
   <v-app>
     <v-app-bar app color="primary" dark elevation="0">
       <v-icon class="mr-2" large>mdi-post</v-icon>
-      <div class="app-name text-h5">Personal Blog</div>
+      <router-link
+        to="/"
+        class="app-name text-h5 text-decoration-none white--text"
+      >
+        Personal Blog
+      </router-link>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="mt-8">
       <router-view />
     </v-main>
   </v-app>

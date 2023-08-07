@@ -26,7 +26,6 @@
 import Vue from "vue";
 import PostCard from "../components/PostCard.vue";
 import AddModal from "@/components/AddModal.vue";
-import { mapActions } from "vuex";
 import { Post } from "@/types";
 
 export default Vue.extend({
@@ -47,9 +46,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapActions(["delPost", "addPost", "editPost"]),
     savePost(post: Post) {
-      this.addPost(post);
+      this.$store.commit("addPost", post);
       this.isAddModalOpen = false;
     },
   },
