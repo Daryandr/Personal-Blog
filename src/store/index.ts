@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { Post } from "@/types";
+import { Comment, Post } from "@/types";
 
 Vue.use(Vuex);
 
@@ -20,13 +20,33 @@ export default new Vuex.Store({
     delPost(state, id: string) {
       const index = state.posts.findIndex((post: Post) => post.id === id);
       state.posts.splice(index, 1);
+      localStorage.setItem("posts", JSON.stringify(state.posts));
     },
     addPost(state, post: Post) {
       state.posts.unshift(post);
+      localStorage.setItem("posts", JSON.stringify(state.posts));
     },
     editPost(state, post) {
       const index = state.posts.findIndex((p: Post) => p.id === post.id);
       state.posts.splice(index, 1, post);
+      localStorage.setItem("posts", JSON.stringify(state.posts));
+    },
+    delComment(state, payload) {
+      const index = state.posts.findIndex(
+        (post: Post) => post.id === payload.id
+      );
+      const comIndex = state.posts[index].comments.findIndex(
+        (comment: Comment) => comment.id === payload.comment.id
+      );
+      state.posts[index].comments.splice(comIndex, 1);
+      localStorage.setItem("posts", JSON.stringify(state.posts));
+    },
+    addComment(state, payload) {
+      const index = state.posts.findIndex(
+        (post: Post) => post.id === payload.id
+      );
+      state.posts[index].comments.unshift(payload.comment);
+      localStorage.setItem("posts", JSON.stringify(state.posts));
     },
   },
   actions: {
@@ -35,18 +55,6 @@ export default new Vuex.Store({
       if (posts != null) {
         commit("setPosts", JSON.parse(posts));
       }
-    },
-    delPost({ commit }, payload) {
-      commit("delPost", payload);
-      localStorage.setItem("posts", JSON.stringify(this.state.posts));
-    },
-    addPost({ commit }, payload) {
-      commit("addPost", payload);
-      localStorage.setItem("posts", JSON.stringify(this.state.posts));
-    },
-    editPost({ commit }, payload) {
-      commit("editPost", payload);
-      localStorage.setItem("posts", JSON.stringify(this.state.posts));
     },
   },
 });
