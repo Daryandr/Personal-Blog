@@ -11,7 +11,7 @@
         <v-icon>mdi-delete</v-icon>
       </v-btn>
     </div>
-    <p>{{ comment.text }}</p>
+    <p class="px-1">{{ comment.text }}</p>
   </v-card>
 </template>
 

@@ -3,7 +3,7 @@ export type Post = {
   title: string;
   shortDescription: string;
   description: string;
-  date: Date;
+  date: string;
   comments: [Comment];
 };
 

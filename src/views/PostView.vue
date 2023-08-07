@@ -3,15 +3,17 @@
     <v-row class="d-flex justify-center">
       <v-col lg="8" md="9" sm="10">
         <div class="d-flex justify-space-between">
-          <p class="text-h5">{{ post.title }}</p>
+          <p class="text-h5 break-word">{{ post.title }}</p>
           <div class="d-flex">
-            <v-btn class="mr-3" icon><v-icon>mdi-pencil</v-icon></v-btn>
+            <v-btn @click="isEditModalOpen = true" class="mx-3" icon>
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
             <v-btn @click="deletePost" icon><v-icon>mdi-delete</v-icon></v-btn>
           </div>
         </div>
         <v-divider class="mb-4" />
-        <p>{{ post.shortDescription }}</p>
-        <p>{{ post.description }}</p>
+        <p class="break-word">{{ post.shortDescription }}</p>
+        <p class="break-word">{{ post.description }}</p>
         <p>Дата обновления: {{ formattedDate }}</p>
         <p>Комментарии ({{ post.comments.length }}):</p>
         <v-text-field
@@ -34,6 +36,15 @@
           class="my-3"
           @delete="delComment({ id: postId, comment: com })"
         />
+        <add-modal
+          v-if="isEditModalOpen"
+          :visible="isEditModalOpen"
+          :post-id="postId"
+          header="Редактирование поста"
+          @close="isEditModalOpen = false"
+          @save="savePost"
+        />
+        <confirm-modal ref="confirm" />
       </v-col>
     </v-row>
   </v-container>
@@ -45,15 +56,24 @@ import { mapMutations } from "vuex";
 import { Comment, Post } from "@/types";
 import CommentForm from "@/components/CommentForm.vue";
 import CommentCard from "@/components/CommentCard.vue";
+import AddModal from "@/components/AddModal.vue";
+import ConfirmModal from "@/components/ConfirmModal.vue";
+
+interface ConfirmModalComponent extends Vue {
+  open(message: string): Promise<boolean>;
+}
 
 export default Vue.extend({
   name: "HomePage",
   components: {
     CommentForm,
     CommentCard,
+    AddModal,
+    ConfirmModal,
   },
   data: () => ({
     isComFormOpen: false,
+    isEditModalOpen: false,
   }),
 
   computed: {
@@ -70,16 +90,32 @@ export default Vue.extend({
 
   methods: {
     ...mapMutations(["delPost", "editPost", "addComment", "delComment"]),
+    savePost(p: Post) {
+      this.editPost(p);
+      this.isEditModalOpen = false;
+    },
     saveComment(comment: Comment) {
       this.addComment({
         id: this.postId,
         comment: comment,
       });
     },
-    deletePost() {
-      this.delPost(this.postId);
-      this.$router.push("/");
+    async deletePost() {
+      if (
+        await (this.$refs.confirm as ConfirmModalComponent).open(
+          `Вы точно хотите удалить пост "${this.post.title}"?`
+        )
+      ) {
+        this.delPost(this.postId);
+        this.$router.push("/");
+      }
     },
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.break-word {
+  word-break: break-word;
+}
+</style>

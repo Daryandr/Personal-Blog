@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark elevation="0">
-      <v-icon class="mr-2" large>mdi-post</v-icon>
+      <v-icon class="mx-2" large>mdi-post</v-icon>
       <router-link
         to="/"
         class="app-name text-h5 text-decoration-none white--text"
@@ -10,7 +10,7 @@
       </router-link>
     </v-app-bar>
 
-    <v-main class="mt-8">
+    <v-main class="mt-5">
       <router-view />
     </v-main>
   </v-app>

@@ -2,7 +2,7 @@
   <v-dialog v-model="show" width="30rem" persistent>
     <v-card class="pa-2">
       <v-card-title class="d-flex justify-space-between">
-        <span class="text-h6">Добавление поста</span>
+        <span class="text-h6">{{ header }}</span>
         <v-btn class="ml-2" small plain icon @click="cancel">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -60,33 +60,44 @@
 <script lang="ts">
 import Vue from "vue";
 import { v4 as uuidv4 } from "uuid";
+import { Post, Comment } from "@/types";
 
 export default Vue.extend({
   name: "AddModal",
 
   props: {
     visible: Boolean,
+    postId: {
+      type: String,
+      default: undefined,
+    },
+    header: {
+      type: String,
+      default: "",
+    },
   },
 
   data: () => ({
     post: {
-      id: uuidv4(),
+      id: "",
       title: "",
       shortDescription: "",
       description: "",
-      date: new Date().toJSON().slice(0, 10),
-      comments: [],
+      date: "",
+      comments: [] as Comment[],
     },
     titleRules: [
-      (v: any) => !!v || "Введите заголовок",
-      (v: any) => v.length <= 50 || "Максимальная длина 50 символов",
+      (v: string) => !!v || "Введите заголовок",
+      (v: string) => (v && v.length <= 50) || "Максимальная длина 50 символов",
     ],
     shortRules: [
-      (v: any) => !!v || "Введите описание",
-      (v: any) => v.length <= 100 || "Максимальная длина 100 символов",
+      (v: string) => !!v || "Введите описание",
+      (v: string) =>
+        (v && v.length <= 100) || "Максимальная длина 100 символов",
     ],
     descRules: [
-      (v: any) => v.length <= 255 || "Максимальная длина 255 символов",
+      (v: string) =>
+        (v && v.length <= 255) || "Максимальная длина 255 символов",
     ],
   }),
   computed: {
@@ -100,6 +111,23 @@ export default Vue.extend({
         }
       },
     },
+    postData(): Post {
+      return this.$store.getters.getPostById(this.postId);
+    },
+  },
+  created() {
+    if (this.postData) {
+      this.post = structuredClone(this.postData);
+    } else {
+      this.post = {
+        id: uuidv4(),
+        title: "",
+        shortDescription: "",
+        description: "",
+        date: new Date().toJSON().slice(0, 10),
+        comments: [],
+      };
+    }
   },
   methods: {
     cancel() {
