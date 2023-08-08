@@ -119,14 +119,7 @@ export default Vue.extend({
     if (this.postData) {
       this.post = structuredClone(this.postData);
     } else {
-      this.post = {
-        id: uuidv4(),
-        title: "",
-        shortDescription: "",
-        description: "",
-        date: new Date().toJSON().slice(0, 10),
-        comments: [],
-      };
+      this.post.id = uuidv4();
     }
   },
   methods: {
@@ -138,6 +131,7 @@ export default Vue.extend({
         this.$refs.addForm as Vue & { validate: () => boolean }
       ).validate();
       if (valid) {
+        this.post.date = new Date().toJSON().slice(0, 10);
         this.$emit("save", this.post);
       }
     },

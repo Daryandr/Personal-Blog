@@ -8,8 +8,9 @@
     >
       <v-card-title>{{ post.title }}</v-card-title>
       <v-divider />
+
       <v-card-text>
-        <p class="body-1 black--text">{{ post.shortDescription }}</p>
+        <p class="body-1 black--text post-text">{{ post.shortDescription }}</p>
         <div class="d-flex justify-space-between">
           <p>Комментарии ({{ post.comments.length }})</p>
           <p>{{ formattedDate }}</p>

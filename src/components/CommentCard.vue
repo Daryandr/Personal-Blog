@@ -6,7 +6,9 @@
         <p class="text-subtitle-1 mb-n2 ml-2">{{ comment.username }}</p>
         <p class="text-caption mb-0 ml-2">{{ comment.email }}</p>
       </div>
-      <v-spacer></v-spacer>
+
+      <v-spacer />
+
       <v-btn @click="$emit('delete')" icon>
         <v-icon>mdi-delete</v-icon>
       </v-btn>

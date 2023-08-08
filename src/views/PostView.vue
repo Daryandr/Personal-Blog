@@ -3,7 +3,8 @@
     <v-row class="d-flex justify-center">
       <v-col lg="8" md="9" sm="10">
         <div class="d-flex justify-space-between">
-          <p class="text-h5 break-word">{{ post.title }}</p>
+          <p class="text-h5 post-text">{{ post.title }}</p>
+
           <div class="d-flex">
             <v-btn @click="isEditModalOpen = true" class="mx-3" icon>
               <v-icon>mdi-pencil</v-icon>
@@ -11,9 +12,10 @@
             <v-btn @click="deletePost" icon><v-icon>mdi-delete</v-icon></v-btn>
           </div>
         </div>
+
         <v-divider class="mb-4" />
-        <p class="break-word">{{ post.shortDescription }}</p>
-        <p class="break-word">{{ post.description }}</p>
+        <p class="post-text">{{ post.shortDescription }}</p>
+        <p class="post-text">{{ post.description }}</p>
         <p>Дата обновления: {{ formattedDate }}</p>
         <p>Комментарии ({{ post.comments.length }}):</p>
         <v-text-field
@@ -24,11 +26,13 @@
           v-if="!isComFormOpen"
           value="Написать комментарий..."
         />
+
         <comment-form
           v-if="isComFormOpen"
           @close="isComFormOpen = false"
           @save="saveComment"
         />
+
         <comment-card
           v-for="com in post.comments"
           :key="com.id"
@@ -36,6 +40,7 @@
           class="my-3"
           @delete="delComment({ id: postId, comment: com })"
         />
+
         <add-modal
           v-if="isEditModalOpen"
           :visible="isEditModalOpen"
@@ -113,9 +118,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style lang="scss" scoped>
-.break-word {
-  word-break: break-word;
-}
-</style>

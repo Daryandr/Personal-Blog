@@ -10,7 +10,7 @@
       </router-link>
     </v-app-bar>
 
-    <v-main class="mt-5">
+    <v-main class="my-5 px-2">
       <router-view />
     </v-main>
   </v-app>
@@ -27,8 +27,12 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .app-name {
   font-family: "Montserrat", sans-serif;
+}
+.post-text {
+  word-break: break-word;
+  white-space: pre-line;
 }
 </style>

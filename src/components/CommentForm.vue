@@ -1,10 +1,10 @@
 <template>
   <v-form ref="commentForm" lazy-validation @submit.prevent="saveComment">
-    <div class="d-flex">
+    <div class="d-sm-flex">
       <v-text-field
         color="secondary"
         prepend-icon="mdi-account"
-        class="mr-10"
+        class="mr-sm-10"
         v-model="comment.username"
         label="Имя"
         :rules="nameRules"
@@ -20,6 +20,7 @@
         clearable
       />
     </div>
+
     <v-textarea
       v-model="comment.text"
       class="mt-3"
@@ -33,7 +34,9 @@
       required
       autofocus
     />
+
     <v-spacer />
+
     <div class="d-flex justify-end mb-6">
       <v-btn color="grey" @click="$emit('close')" class="mr-3" dark>
         Отмена
